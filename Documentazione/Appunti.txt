@@ -1,0 +1,4 @@
+Primo obiettivo: capire la consegna.
+  Oss: ai percorsi non viene data una descrizione formale. Se un percorso potesse ripassare più volte per lo stesso nodo/arco, allora la consegna opzionale non ha senso (avrebbe un valore infinito). Chiedere spiegazioni al docente/verificare se la definizione di percorso è data nel corso. 
+  Oss: per ora ho intenzione di scrivere la porzione di algoritmo che lavora direttamente sul grafo in C++, ma bisogna valutare se voglio usare un altro linguaggio per rendere i file *.all-paths.bz2 più comodi da leggere.
+  Oss: bisogna aggiungere l'utente robertogrossi nella repository.
