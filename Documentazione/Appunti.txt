@@ -3,3 +3,9 @@ Primo obiettivo: capire la consegna.
   Oss: per ora ho intenzione di scrivere la porzione di algoritmo che lavora direttamente sul grafo in C++, ma bisogna valutare se voglio usare un altro linguaggio per rendere i file *.all-paths.bz2 più comodi da leggere.
   Oss: bisogna aggiungere l'utente robertogrossi nella repository.
   Oss: il file *.all-paths.bz2 più piccolo ha circa 6*10^5 righe, ciascuna delle quali ha un percorso di circa 4 nodi. Questo fa sì che circa qualsiasi algoritmo che runna in tempo quadratico sul numero di archi del grafo è probabilmente inefficiente, e andrebbe eventualmente testato su grafi fittizi. Inoltre ad un primo esame sembrano esserci esattamente 9999 AS, il che rende la matrice di adiacenza piuttosto sparsa. Tenerlo in considerazione per dopo.
+
+Nelle slide del corso viene data una definizione formale di percorso che non risolve l'ambiguità. Abbandonare il punto facoltativo.
+
+Nuovo obiettivo: scrivere un file setup.cpp che parsi *.all-paths.bz2, costruisca il grafo, ne determini le sue componenti connesse ed il massimo peso associato ad un arco. Questo file sarà distinto da quello definitivo, e se risulta esserci un'unica componente connessa allora riuserò il codice nel file definitivo mentre se ne trovo più di una creerò un nuovo file di testo con solo gli archi della componente connessa massimale, già pesati e già sortati, per velocizzare la fase successiva di sviluppo.
+
+Per contare le componenti connesse uso un algoritmo dfs, anche se nel file finale vorrò probabilmente usare un'altro algoritmo.
