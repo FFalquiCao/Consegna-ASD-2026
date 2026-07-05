@@ -62,6 +62,7 @@ int main() {
             } else {
                 adj[prev].push_back(make_pair(curr, 1));
                 adj[curr].push_back(make_pair(prev, 1));
+                maxWeight = max(maxWeight, 1);
             }
 
             prev = curr;
@@ -97,12 +98,12 @@ int main() {
 
     visited = vector<bool>(n,0); 
     
-    unordered_map<int,int> pesi;
+    //unordered_map<int,int> pesi;
     unordered_map<int,int> nodi;
     vector<pair<int,pair<int,int>>> archi; //contiene {peso, {nodo minore, nodo maggiore}}
 
     int nodoCompresso = 0;
-    int pesoCompresso = 0;
+    //int pesoCompresso = 0;
 
     auto dfsNew = [&](int index, auto dfsNew) {
         if(visited[index]) return;
@@ -116,10 +117,10 @@ int main() {
                 archi.push_back(make_pair(u.second, make_pair(u.first, index)));
             }
 
-            if(pesi.find(u.second) == pesi.end()) {
-                pesi[u.second] = pesoCompresso;
-                pesoCompresso++;
-            }
+            //if(pesi.find(u.second) == pesi.end()) {
+            //    pesi[u.second] = pesoCompresso;
+            //    pesoCompresso++;
+            //}
 
             dfsNew(u.first, dfsNew);
         }
@@ -134,10 +135,7 @@ int main() {
         cout << u.first << " " << u.second << "\n";
     }
 
-    cout << pesoCompresso << "\n";
-    for(auto u : pesi) {
-        cout << u.first << " " << u.second << "\n";
-    }
+    cout << maxWeight << "\n";
 
     cout << archi.size() << "\n";
     for(auto u : archi) {
