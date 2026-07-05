@@ -130,6 +130,20 @@ int main() {
     sort(archi.begin(), archi.end());
 
     cout << nodoCompresso << "\n";
+    for(auto u : nodi) {
+        cout << u.first << " " << u.second << "\n";
+    }
+
     cout << pesoCompresso << "\n";
+    for(auto u : pesi) {
+        cout << u.first << " " << u.second << "\n";
+    }
+
     cout << archi.size();
+    for(auto u : archi) {
+        cout << u.first << " " << u.second.first << " " << u.second.second << "\n";
+    }
+
+    //  Da runnare con il comando
+    //  ./setup.exe < 19980101.all-paths > grafo.txt
 }
