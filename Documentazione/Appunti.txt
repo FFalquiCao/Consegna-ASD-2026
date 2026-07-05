@@ -21,3 +21,5 @@ Seconda soluzione: vogliamo fare una qualche precomputazione che ci permetta di 
 Questo ricorda la struttura dati della Union-Find: in effetti, possiamo produrre una lista di V partizioni dell'insieme di nodi del grafo, ciascuna data dalla lista di insiemi raggiungibili con archi <= v.
 Di base, questa osservazione produce un algoritmo con queries in O(log(n)), come quelle della Union-Find, ma con tempi di precomputazione di O(n*v) e spazio ausiliario O(n*v) proibitivi. 
 Invece, possiamo fare la seguente osservazione: le n*v componenti connesse trovate possono essere ordinate parzialmente per inclusione, producendo una struttuta d'albero. A meno di aggiungere nodi solo quando necessario, questo albero può essere rappresentato fedelmente con <= 2*n nodi. 
+L'algoritmo per costruire questo albero è simile a Kruskal: la differenza è che al posto di aggiungere un arco all'MST aggiungiamo (al più) un nodo all'albero.
+Dopo aver costruito l'albero, il problema consiste nel trovare l'antenato comune più basso. Questo è un problema noto, risolvibile con tempi di precomputazione e di queries accettabili.
