@@ -33,7 +33,6 @@ int main() {
         }
     }
 
-    cout << "MaxV: " << MaxV << "\n"; //dovrebbe essere 9999
     int n = MaxV+1;
 
     vector<vector<pair<int,int>>> adj(n, vector<pair<int,int>>(0));
@@ -69,8 +68,6 @@ int main() {
         }
     }
 
-    cout << "MAX PESO: " << maxWeight << "\n";
-
     int size_curr_comp = 0;
 
     vector<bool> visited(n);
@@ -98,7 +95,41 @@ int main() {
         }
     }
 
-    cout << "Parti connesse: " << connected_parts << "\n";
-    cout << "Max size: " << max_size << "\n";
-    cout << "Max size index: " << max_size_index << "\n";
+    visited = vector<bool>(n,0); 
+    
+    unordered_map<int,int> pesi;
+    unordered_map<int,int> nodi;
+    vector<pair<int,pair<int,int>>> archi; //contiene {peso, {nodo minore, nodo maggiore}}
+
+    int nodoCompresso = 0;
+    int pesoCompresso = 0;
+
+    auto dfsNew = [&](int index, auto dfsNew) {
+        if(visited[index]) return;
+        visited[index] = true; 
+        
+        nodi[index] = nodoCompresso;
+        nodoCompresso++;
+
+        for(auto u : adj[index]) {
+            if(u.first < index) {
+                archi.push_back(make_pair(u.second, make_pair(u.first, index)));
+            }
+
+            if(pesi.find(u.second) == pesi.end()) {
+                pesi[u.second] = pesoCompresso;
+                pesoCompresso++;
+            }
+
+            dfsNew(u.first, dfsNew);
+        }
+    };
+
+    dfsNew(max_size_index, dfsNew);
+
+    sort(archi.begin(), archi.end());
+
+    cout << nodoCompresso << "\n";
+    cout << pesoCompresso << "\n";
+    cout << archi.size();
 }
