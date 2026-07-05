@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//const int LINES = 594924;
-const int LINES = 3;
+const int LINES = 594924;
+//const int LINES = 3;
 
 int main() {
 
@@ -70,4 +70,35 @@ int main() {
     }
 
     cout << "MAX PESO: " << maxWeight << "\n";
+
+    int size_curr_comp = 0;
+
+    vector<bool> visited(n);
+    auto dfs = [&](int index, auto dfs) {
+        if(visited[index]) return;
+        visited[index] = true; 
+        size_curr_comp++;
+
+        for(auto u : adj[index]) dfs(u.first, dfs);
+    };
+
+    int connected_parts = 0;
+    int max_size = 0;
+    int max_size_index = 0;
+
+    for(int i = 1; i < n; i++) {
+        if(!visited[i]) {
+            size_curr_comp = 0;
+            dfs(i, dfs);
+            if(size_curr_comp > max_size) {
+                max_size = size_curr_comp;
+                max_size_index = i;
+            }
+            connected_parts++;
+        }
+    }
+
+    cout << "Parti connesse: " << connected_parts << "\n";
+    cout << "Max size: " << max_size << "\n";
+    cout << "Max size index: " << max_size_index << "\n";
 }
