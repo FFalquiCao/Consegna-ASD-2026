@@ -8,14 +8,14 @@ int main() {
 
     int n; cin >> n; // numero di nodi
     unordered_map<int,int> NodicompToReg;
-    unordered_map<int,int> NodiregToComp;
+    vector<int> NodiregToComp(n);
     
     for(int i = 0; i<n; i++) {
-        int reg, comp;
-        cin >> reg >> comp;
+        int reg;
+        cin >> reg;
 
-        NodicompToReg[comp] = reg;
-        NodiregToComp[reg] = comp;
+        NodicompToReg[i] = reg;
+        NodiregToComp[reg] = i;
     }
 
     int V; cin >> V; // valore del peso max: tutti i pesi w sono interi fra 1 e V
@@ -52,6 +52,12 @@ int main() {
                 dfs(u.first, dfs);
         }
     };
+
+    dfs(a, dfs);
+    
+    cout << visited[b];
+    
+}
 
     dfs(a, dfs);
     
