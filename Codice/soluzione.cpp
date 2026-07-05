@@ -7,8 +7,8 @@ const int LINES = 594924;
 int main() {
 
     int n; cin >> n; // numero di nodi
-    unordered_map<int,int> NodicompToReg;
-    vector<int> NodiregToComp(n);
+    unordered_map<int,int> NodiregToComp;
+    vector<int> NodicompToReg(n);
     
     for(int i = 0; i<n; i++) {
         int reg;
@@ -39,28 +39,34 @@ int main() {
     //    cout << u.first << " " << u.second << "\n";
     //}
 
-    int a = 480, b = 800; //cin >> a >> b; //nodi di cui trovare il minmax path
+    int a, b; cin >> a >> b; //nodi di cui trovare il minmax path
     //a = NodiregToComp[a]; b = NodiregToComp[b]; 
 
+    
     vector<bool> visited(n);
-    auto dfs = [&](int index, auto dfs) {
+    auto dfs = [&](int index, auto dfs, int w) {
         if(visited[index]) return;
         visited[index] = true; 
 
         for(auto u : adj[index]) {
-            if(u.second <= 25)
-                dfs(u.first, dfs);
+            if(u.second <= w)
+                dfs(u.first, dfs, w);
         }
     };
 
-    dfs(a, dfs);
+    //cerchiamo il minimo v per cui visited[b]=true 
+    int l = 1; int r = V;
+    int mid;
+    while(l != r) {
+        mid = (l + r) / 2;
+        visited = vector<bool>(n, false);
+        dfs(a, dfs, mid);
+        if (visited[b])
+            r = mid;
+        else 
+            l = mid + 1;
+   }
     
-    cout << visited[b];
-    
-}
-
-    dfs(a, dfs);
-    
-    cout << visited[b];
+    cout << r;
     
 }
