@@ -139,7 +139,7 @@ int main() {
         cout << u.first << " " << u.second << "\n";
     }
 
-    cout << archi.size();
+    cout << archi.size() << "\n";
     for(auto u : archi) {
         cout << u.first << " " << u.second.first << " " << u.second.second << "\n";
     }
