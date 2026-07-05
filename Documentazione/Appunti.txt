@@ -16,3 +16,6 @@ Conclusione: occorre comprimere sia i nodi della componente connessa che i pesi 
 Correzione: comprimere i pesi dovrebbe essere inutile. La versione definitiva di setup.cpp legge il file .all-paths, trova la componente connessa più grossa, e scrive in un singolo file (in quest'ordine): il numero di nodi del grafo, i loro indici, il massimo peso di un'arco, il numero di archi, e gli archi in ordine crescente nel peso.
 
 Prima versione della soluzione: carica i dati riguardanti il grafo (come specificato sopra), li salva in un vettore di vettori adj, e fa binary search sul valore di costo(P) controllando con una dfs se i nodi a e b sono connessi nel grafo implicito ottenuto togliendo i nodi con valore strettamente maggiore di costo(P). Questa soluzione è salvata in SoluzioneV1.cpp.
+
+Seconda soluzione: vogliamo fare una qualche precomputazione che ci permetta di fare le queries più velocemente. Una forma di ridondanza in queries diverse è che, se minP(a,b)<=k e minP(a,c)<=k, allora anche minP(b,c)<=k in quanto, alla peggio, possiamo prendere il percorso b-> a-> c. 
+Questo ricorda la struttura dati della DSU: in effetti, possiamo produrre una lista di V partizioni dell'insieme di nodi del grafo, ciascuna data dalla lista di insiemi raggiungibili con archi <= v.
