@@ -99,18 +99,16 @@ int main() {
     visited = vector<bool>(n,0); 
     
     //unordered_map<int,int> pesi;
-    unordered_map<int,int> nodi;
-    vector<pair<int,pair<int,int>>> archi; //contiene {peso, {nodo minore, nodo maggiore}}
-
-    int nodoCompresso = 0;
     //int pesoCompresso = 0;
+
+    vector<int> nodi;
+    vector<pair<int,pair<int,int>>> archi; //contiene {peso, {nodo minore, nodo maggiore}}
 
     auto dfsNew = [&](int index, auto dfsNew) {
         if(visited[index]) return;
         visited[index] = true; 
         
-        nodi[index] = nodoCompresso;
-        nodoCompresso++;
+        nodi.push_back(index);
 
         for(auto u : adj[index]) {
             if(u.first < index) {
@@ -130,9 +128,9 @@ int main() {
 
     sort(archi.begin(), archi.end());
 
-    cout << nodoCompresso << "\n";
+    cout << nodi.size() << "\n";
     for(auto u : nodi) {
-        cout << u.first << " " << u.second << "\n";
+        cout << u << "\n";
     }
 
     cout << maxWeight << "\n";
