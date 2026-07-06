@@ -123,21 +123,32 @@ A questo punto stampiamo a \texttt{sdout}, in quest'ordine:
     \item $n$ righe, ciascuna contenente un nodo della componente connessa
     \item Il massimo peso $W$
     \item Il numero di archi $m$
-    \item $m$ righe, ciascuna contenente: il peso $w_i$, il nodo minore dell'arco $ln$, e il nodo maggiore $gn$.
+    \item $m$ righe, ciascuna contenente: il peso $w_i$, il nodo minore dell'arco $l_i$, e il nodo maggiore $g_i$.
 \end{itemize}
 
 \section{Prima soluzione}
-La prima soluzione 
-\section{Seconda soluzione efficiente}
-\subsection{Idea dell'algoritmo}
-\subsection{Descrizione e correttezza}
+\subsection{Idea}
+La prima soluzione è molto semplice: ignora qualsiasi forma di precomputazione, e parte dall'osservazione che il costo minimo fra due archi $u$, $v$ è minore o uguale a $k$ se e solo se due archi sono connessi nel grafo modificato $G_k$ in cui gli archi con peso $k'>k$ sono rimossi. La domanda diventa quindi trovare il minimo $k$ che disconnette $u$ e $v$. La connessione o non connessione fra due nodi si può ottenere in un tempo $O(m)$, dove $m$ è il numero di archi del grafo.
+
+Dunque con una semplice binary search è possibile ottenere $k$ in un tempo $O(m\log(W))$, dove $W$ è il peso massimo.
+
 \subsection{Implementazione}
+La maggior parte del lavoro è passata nella fase di compressione degli archi: è sufficiente creare due strutture dati, la mappa \texttt{veNodiregToComp} che associa ad ogni nodo regolarmente indicato il suo valore compresso e il vettore \texttt{NodicompToReg}, che associa ad ogni nodo indicato in modo compresso il suo valore regolare.
+La fase di caricamento degli archi prodotti da \texttt{setup.cpp} e della \textit{dfs} è analoga al punto precedente e del tutto meccanica.
 
-\section{Punto facoltativo}
+\section{Seconda soluzione}
+Questa soluzione è molto più complessa, e fa uso di ampia precomputazione in modo da poter risolvere ciascuna query in tempo logaritmico.
+\subsection{Idea}
+Vogliamo fare una qualche precomputazione che ci permetta di fare le queries più velocemente. Una forma di ridondanza in queries diverse è che, se $\min P(a,b)\le k$ e $\min P(a,c)\le k$, allora anche $\min P(b,c)\le k$ in quanto, alla peggio, possiamo prendere il percorso $(b,a,c)$. 
+Questo produce una generalizzazione della la struttura dati della Union-Find: in effetti, possiamo produrre una lista di $W$ partizioni dell'insieme di nodi del grafo, ciascuna data dalla lista di insiemi raggiungibili con archi di peso $w \le k$.
+Di base, questa osservazione produce un algoritmo con queries in $O(\log(n))$, come quelle della Union-Find, ma con tempi di precomputazione di $O(nv)$ e spazio ausiliario $O(nv)$ proibitivi. 
+Invece, possiamo fare la seguente osservazione: le $nv$ componenti connesse trovate possono essere ordinate parzialmente per inclusione, producendo una struttura d'albero. A meno di aggiungere nodi solo quando necessario, questo albero può essere rappresentato fedelmente con $2n-1$ nodi.
+L'algoritmo per costruire questo albero è simile a Kruskal: la differenza è che al posto di aggiungere un arco all'\textit{MST} aggiungiamo (al più) un nodo all'albero ogni volta che un arco unisce due insiemi precedentemente disgiunti. Questo dimostra anche che alla fine aggiungeremo esattamente $n-1$ nodi aggiuntivi, pari al numero di archi dell'\textit{MST}. Ogni nodo che viene aggiunto da un arco di peso $w$ assume esso stesso un valore $w$, e viene inizializzato come un singoletto nella Union-Find e poi unito ai due insiemi che connette.
 
+Quando due insiemi vengono uniti (di regola il più piccolo viene unito al più grande), occorre anche che i nodi che rappresentano il nodo vengano messi in relazione ad albero. Per fare ciò, ogni rappresentante di un insieme (ovvero l'output di \texttt{find\_set}), deve tenere in memoria il nodo dell'albero a cui corrisponde e aggiornarlo ad ogni unione.
 
-\bibliographystyle{plain} 
-\bibliography{refs} 
+Dopo aver costruito l'albero, il problema consiste nel trovare l'antenato comune più basso. Questo è un problema noto, risolvibile con tempi di precomputazione e di queries accettabili. Ho scelto una soluzione con precomputazione in $O(n\log n)$ e queries in $\log n$.
+
 
 \bigskip
 \bigskip
