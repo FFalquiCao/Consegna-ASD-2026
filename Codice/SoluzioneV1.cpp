@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int LINES = 594924;
-//const int LINES = 3;
 
 int main() {
 
@@ -39,6 +37,8 @@ int main() {
     //    cout << u.first << " " << u.second << "\n";
     //}
 
+    int q; cin >> q; 
+    for(int i = 0; i<q; i++) {
     int a, b; cin >> a >> b; //nodi di cui trovare il minmax path
     a = NodiregToComp[a]; b = NodiregToComp[b]; 
 
@@ -67,6 +67,6 @@ int main() {
             l = mid + 1;
    }
     
-    cout << r;
-    
+    cout << r << "\n";
+    }
 }
