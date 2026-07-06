@@ -72,6 +72,8 @@ Operazioni di ricerca minmax su grafi\\
 
 \tableofcontents
 
+\bigskip\bigskip
+
 \section{Linee Generali}
 \subsection{Definizione del problema}
 Il progetto ha l'obiettivo di analizzare la rete di trasmissione di pacchetti su internet tra Autonomous Systems. I dati derivano da misurazioni reali, come pubblicato dal dataset CAIDA AS Relationships. Da questo database occorre quindi costruire un grafo pesato, per poi saper rispondere a domande su coppie di vertici del grafo. 
@@ -95,12 +97,8 @@ $$
 Dove $w$ è il peso dell'arco, mentre $k$ è la lunghezza del percorso.
 L'obiettivo è di riuscire a trovare il minimo del costo di $P$, al variare di $P$ tra i due vertici $u$ e $v$ dati in input. 
 
-
-
-
-
 \subsection{Piani preliminari}
-
+Com'è chiaro dalla descrizione del problema, esso può essere comodamente suddiviso in due parti essenzialmente indipendenti: l'elaborazione del file CAIDA in un grafo, e l'elaborazione di un algoritmo per rispondere alle domande sul grafo. Ho preso quindi la decisione di creare due file distinti per ciascuna parte, usando il linguaggio \texttt{C++} per entrambi. Il primo file avrà quindi il compito di produrre una descrizione del grafo semplice e veloce da leggere per il secondo file. Siccome la maggior parte degli algoritmi sui grafi pesati può essere resa più veloce se i nodi sono interi consecutivi e gli archi vengono processati in ordine, ho deciso di assegnare l'incarico di riordinare gli archi e fornire un elenco preliminare di tutti i nodi al primo file, di modo da non dovermene più preoccupare nella seconda parte (quella concettualmente più difficile). Tutti gli step, per entrambi i file, vengono testati su \texttt{19980101.all-paths}, in quanto è il file più leggero disponibile. Ciononostante, dover leggere $43\cdot10^6$ caratteri di testo ogni volta non era un processo velocissimo, almeno sul mio computer; mi è quindi capitato di scrivere l'input direttamente da terminale a mano in fase di debugging. Per quanto riguarda il processo di documentazione, oltre ovviamente ai commenti all'interno del codice e alle descrizioni dei commit su Github, ho mantenuto un file \texttt{Appunti.txt} che conteneva le mie idee su come proseguire nello sviluppo. Questo file è stato invece prodotto a lavoro terminato.
 
 \section{Setup}
 
