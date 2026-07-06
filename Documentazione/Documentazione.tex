@@ -35,6 +35,7 @@ citecolor = black]{hyperref} % For hyperlinks in the PDF
 \fancyfoot[L]{} % Custom footer text
 \fancyfoot[C]{} % Custom footer text
 \fancyfoot[R]{\thepage} % Custom footer text
+\usepackage[nottoc,numbib]{tocbibind}
 
 \begin{document}
 
@@ -56,7 +57,7 @@ f.falquicao@studenti.unipi.it
 \large 
 Progetto Algoritmi e Strutture Dati\\ 
 \normalsize 
-Operazioni di ricerca minmax su grafi $7$\\ 
+Operazioni di ricerca minmax su grafi\\ 
 \end{minipage}
 \begin{minipage}{0.295\textwidth} 
 \raggedleft
@@ -72,23 +73,50 @@ Operazioni di ricerca minmax su grafi $7$\\
 \tableofcontents
 
 \section{Linee Generali}
+\subsection{Definizione del problema}
+Il progetto ha l'obiettivo di analizzare la rete di trasmissione di pacchetti su internet tra Autonomous Systems. I dati derivano da misurazioni reali, come pubblicato dal dataset CAIDA AS Relationships. Da questo database occorre quindi costruire un grafo pesato, per poi saper rispondere a domande su coppie di vertici del grafo. 
 
-\section{Modulo A}
+Dai dati forniti da CAIDA, si possono estrarre una serie di righe, ciascuna che descrive un percorso con formato 
 
-\section{Modulo B}
+\medskip
+{
+\centering 
+\texttt{routeviews/routeviews|5 1239|6113|8063|3464 199.88.21.0/24 i 144.228.240.93}\\
+}
+\medskip
+Questa riga produce il percorso del pacchetto di informazioni $(1239,6113,8063,34641)$. Questa riga ha l'effetto sul grafo non diretto pesato di aumentare di $1$ il peso dell'arco $(1239,6113)$, di $(6113, 8063)$, e di $(8063, 34641)$. Una volta processate tutte le righe, ci limitiamo a considerare la componente connessa del grafo di dimensione massima. 
 
-\section{Modulo C}
-\subsection{subsection}
-\subsubsection{subsubsection}
+Dati due nodi $u$ e $v$ della componente connessa, consideriamo l'insieme (non vuoto) di tutti i percorsi $P$ che connettono $u$ e $v$. Ricordiamo che un percorso è una lista ordinata di nodi, ciascuno connesso da un arco con il successivo. Dunque $P_1 = u$ e $P_k = v$. Associamo a ogni percorso $P$ la funzione $\text{costo}(P)$:
+
+$$
+    \text{costo}(P) =  \max_{0\le i< k} w(P_i, P_{i+1})
+$$
+
+Dove $w$ è il peso dell'arco, mentre $k$ è la lunghezza del percorso.
+L'obiettivo è di riuscire a trovare il minimo del costo di $P$, al variare di $P$ tra i due vertici $u$ e $v$ dati in input. 
 
 
-\bigskip
-\bigskip
 
-\bigskip
-\bigskip
-\bigskip
-\bigskip
+
+
+\subsection{Piani preliminari}
+
+
+\section{Setup}
+
+\section{Prima soluzione}
+
+\section{Seconda soluzione efficiente}
+\subsection{Idea dell'algoritmo}
+\subsection{Descrizione e correttezza}
+\subsection{Implementazione}
+
+\section{Punto facoltativo}
+
+
+\bibliographystyle{plain} 
+\bibliography{refs} 
+
 \bigskip
 \bigskip
 \bigskip
