@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
-
 vector<int> parent, value, dimen, ins, root;
 vector<vector<int>> adj;
 
@@ -32,14 +30,17 @@ void union_sets(int a, int b) {
 
         //ogni elemento terminale del find_set deve puntare ad un elemento di valore max nel suo sottoinsieme
         //inoltre ogni coppia di insiemi che si uniscono sono connessi nell'albero
+        adj[root[a]].push_back(root[b]);
+        adj[root[b]].push_back(root[a]);
+
         if(value[root[a]] < value[root[b]]) {
             parent[root[a]] = root[b];
             root[a] = root[b];
         } else {
             parent[root[b]] = root[a];
+            root[b] = root[a];
         }
-        adj[root[a]].push_back(root[b]);
-        adj[root[b]].push_back(root[a]);
+        
     }
 }
 
@@ -109,16 +110,11 @@ int main() {
         int b = find_set(gn);
 
         if(a == b) continue;
-        if(value[root[a]] < w && value[root[a]] < w) {
-            // si crea una nuova componente connessa
-            value[newNode] = w;
-            union_sets(a,newNode);
-            union_sets(b,newNode);
-            newNode++;
-        } else {
-            // non si crea una nuova componente connessa
-            union_sets(a,b);
-        } 
+
+        value[newNode] = w;
+        union_sets(a,newNode);
+        union_sets(b,newNode);
+        newNode++;
     }
 
     //anc = vector<vector<int>> (lgmax, vector<int>(2*n));
@@ -127,12 +123,14 @@ int main() {
     //    anc[0][i] = parent[i];
     //}
 
-
-    int sum = 0;
-    for(int i = 0; i<2*n; i++) {
-        sum+=adj[i].size();
-    }
-    cout << sum << " " << 2*newNode;
+    //int j = 0;
+    //while (j <= 6000) {
+    //    cout << j << ": ";
+    //    for(auto u : adj[j]) cout << u << " ";
+    //    cout << "\n";
+    //    j = parent[j];
+    //    
+    //}
     /*vector<bool> visited(2*n);
     auto dfs = [&](int index, auto dfs, int depth) {
         if(visited[index]) return;
@@ -151,4 +149,3 @@ int main() {
 
     // 234 266 hanno percorso minimo 48776. Questo perché 234 si connette esclusivamente a 266, ma lo fa molto spesso.*/
 }
-
