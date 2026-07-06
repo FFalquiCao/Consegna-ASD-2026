@@ -6,7 +6,7 @@ vector<vector<int>> adj;
 
 const int lgmax = 20;
 vector<int> level;
-vector<vector<int>> anc(lgmax);
+vector<vector<int>> anc;
 
 void make_set(int v) {
     ins[v] = v;
@@ -84,9 +84,10 @@ int main() {
     value = vector<int> (2*n, 0);
     ins = vector<int> (2*n, 0);
     dimen = vector<int> (2*n, 1);
-    parent = vector<int> (2*n);
-    root = vector<int> (2*n);
-    adj.resize(2*n);
+    parent = vector<int> (2*n, 0);
+    root = vector<int> (2*n, 0);
+    level = vector<int> (2*n, 0);
+    adj.resize(2*n+10);
 
     for(int i = 0; i<2*n; i++) {
         ins[i] = i;
@@ -117,21 +118,14 @@ int main() {
         newNode++;
     }
 
-    //anc = vector<vector<int>> (lgmax, vector<int>(2*n));
+    anc = vector<vector<int>> (lgmax+1, vector<int>(2*n));
 
-    //for(int i = 0; i<2*n; i++) {
-    //    anc[0][i] = parent[i];
-    //}
+    for(int i = 0; i<2*n; i++) {
+        anc[0][i] = parent[i];
+    }
 
-    //int j = 0;
-    //while (j <= 6000) {
-    //    cout << j << ": ";
-    //    for(auto u : adj[j]) cout << u << " ";
-    //    cout << "\n";
-    //    j = parent[j];
-    //    
-    //}
-    /*vector<bool> visited(2*n);
+    
+    vector<bool> visited(2*n, 0);
     auto dfs = [&](int index, auto dfs, int depth) {
         if(visited[index]) return;
         visited[index] = true; 
@@ -139,13 +133,22 @@ int main() {
 
         for(auto u : adj[index]) dfs(u, dfs, depth+1);
     };
-    dfs(newNode-1, dfs, 1);
+    dfs(2*n-2, dfs, 1);
 
-    for(int i = 0; i<100; i++) cout << level[i] << "\n";
-    //int a, b; cin >> a >> b; //nodi di cui trovare il minmax path
-    //a = NodiregToComp[a]; b = NodiregToComp[b]; 
-    //cout << r;
+    for(int h = 1; h <= lgmax; h++) {
+        for(int i = 0; i < 2*n; i++) {
+            anc[h][i] = anc[h - 1][anc[h - 1][i]]; //Loop più pesante
+        }
+    }
+
+    
+    
+    int a, b; cin >> a >> b; //nodi di cui trovare il minmax path
+    a = NodiregToComp[a]; b = NodiregToComp[b]; 
+    cout << value[getLca(a,b)];
     
 
     // 234 266 hanno percorso minimo 48776. Questo perché 234 si connette esclusivamente a 266, ma lo fa molto spesso.*/
+}
+266 hanno percorso minimo 48776. Questo perché 234 si connette esclusivamente a 266, ma lo fa molto spesso.*/
 }
