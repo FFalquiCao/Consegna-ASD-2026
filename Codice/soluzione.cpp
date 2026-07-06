@@ -141,14 +141,14 @@ int main() {
         }
     }
 
-    
-    
-    int a, b; cin >> a >> b; //nodi di cui trovare il minmax path
-    a = NodiregToComp[a]; b = NodiregToComp[b]; 
-    cout << value[getLca(a,b)];
-    
+    int q; cin >> q;
+
+    for(int i = 0; i<q; i++) {
+        int a, b; cin >> a >> b; //nodi di cui trovare il minmax path
+        a = NodiregToComp[a]; b = NodiregToComp[b]; 
+        cout << value[getLca(a,b)] << "\n";
+    }
 
     // 234 266 hanno percorso minimo 48776. Questo perché 234 si connette esclusivamente a 266, ma lo fa molto spesso.*/
 }
-266 hanno percorso minimo 48776. Questo perché 234 si connette esclusivamente a 266, ma lo fa molto spesso.*/
-}
+
