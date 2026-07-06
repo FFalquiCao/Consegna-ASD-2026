@@ -103,19 +103,31 @@ Com'è chiaro dalla descrizione del problema, esso può essere comodamente suddi
 \section{Setup}
 Il file che risolve la prima parte del progetto si chiama \texttt{setup.cpp}. Anche questo può essere comodamente suddiviso in tre parti: nella prima parte prendo il testo e salvo la lista di percorsi; nella seconda parte prendo la lista di percorsi e ci ottengo i pesi degli archi; e infine nella terza parte salvo tutto questo lavoro in un nuovo file di testo, \texttt{grafo.txt}.
 \subsection{Dal file ai percorsi}
-Questa è la parte più meccanica. Dobbiamo caricare centinaia di migliaia di righe di descrizione: ho deciso per semplicità di fare \textit{hard-coding} e di salvarmi il numero esatto di righe da leggere come costante. Non è tuttavia complicato sostituire il \textit{for loop} a lunghezza fissata con un \textit{while loop} che termina alla fine del file. Ogni riga di \texttt{*.all-paths} è composta da $5$ sottostringhe separate da whitespace, delle quali ci interessa solo la seconda. Questa sottostringa sarà composta da una sequenza di interi positivi separati dal carattere "$\mid$". Prendo quindi ciascun intero con il comando \texttt{stoi}, che mi salva anche la posizione del primo carattere non numerico; dunque cancello fino a quel carattere (incluso) e procedo fino a svuotare la stringa. Tutti questi elementi sono inseriti uno alla volta in un vettore di vettori \texttt{paths}. La cancellazione è la parte più lenta di questa parte di algoritmo in quanto viene fatta all'inizio della stringa e ha una complessità $O(length(s))$, dunque l'algoritmo ha una complessità di $O(length(s)\cdot length(p))$ per riga, dove $p$ è il percorso mentre $s$ è la stringa. Questa sottosezione è la più lenta dell'intero programma. Potrebbe essere ottimizzata leggendo i caratteri uno alla volta anziché usando \texttt{stoi}, per uno speedup dell'ordine della lunghezza media dei percorsi ($\approx5)$.
+Questa è la parte più meccanica. Dobbiamo caricare centinaia di migliaia di righe di descrizione: ho deciso per semplicità di fare \textit{hard-coding} e di salvarmi il numero esatto di righe da leggere come costante. Non è tuttavia complicato sostituire il \textit{for loop} a lunghezza fissata con un \textit{while loop} che termina alla fine del file. Ogni riga di \texttt{*.all-paths} è composta da $5$ sottostringhe separate da whitespace, delle quali ci interessa solo la seconda. Questa sottostringa sarà composta da una sequenza di interi positivi separati dal carattere "$\mid$". Prendo quindi ciascun intero con il comando \texttt{stoi}, che mi salva anche la posizione del primo carattere non numerico; dunque cancello fino a quel carattere (incluso) e procedo fino a svuotare la stringa. Tutti questi elementi sono inseriti uno alla volta in un vettore di vettori \texttt{paths}. La cancellazione è la parte più lenta di questa parte di algoritmo in quanto viene fatta all'inizio della stringa e ha una complessità $O(length(s))$, dunque l'algoritmo ha una complessità di $O(length(s)\cdot length(p))$ per riga, dove $p$ è il percorso mentre $s$ è la stringa. Questa sottosezione è la più lenta dell'intero programma. Potrebbe essere ottimizzata leggendo i caratteri uno alla volta anziché usando \texttt{stoi}, per uno speedup dell'ordine della lunghezza media dei percorsi ($\approx5)$. In questa fase, mi salvo anche il massimo intero associato ad un AS.
 
 \subsection{Dai percorsi al grafo}
 Occorre produrre una funzione che, data una coppia di interi, possa restituire efficientemente il valore associato alla coppia e possa modificare questo valore efficientemente. 
 
 Per grafi non pesati, dove il valore associato ad una coppia è o $0$ o $1$, tipicamente si usa un vettore di vettori di interi \texttt{adj} che mantiene una lista di nodi adiacenti ad un nodo dato. Si potrebbe modificare questo concetto con un vettore di vettori di coppie di interi, con un elemento della coppia uguale al vettore adiacente e l'altro uguale al peso dell'arco; questa è stata la mia implementazione iniziale, conscio che fosse del tutto inefficiente.
 
-Invece, il modo efficiente di risolvere questo problema è con un hash, implementato in \texttt{C++} con la struttura dati \texttt{unordered_map}. Siccome questa struttura dati non ammette comodamente l'uso di pair come chiavi, creo un vettore di mappe le cui \textit{keys} sono il secondo elemento della coppia e i \textit{values} sono i valori degli archi.
+Invece, il modo efficiente di risolvere questo problema è con un hash, implementato in \texttt{C++} con la struttura dati \texttt{unordered\_map}. Siccome questa struttura dati non ammette l'uso di pair come chiavi, creo un vettore di mappe le cui \textit{keys} sono il secondo elemento della coppia e i \textit{values} sono i valori degli archi.
 
+\subsection{Dal grafo al file}
+A questo punto dobbiamo trovare la componente connessa più grande: questo può essere fatto comodamente con una \textit{dfs}, in quanto possiamo aumentare di $1$ un counter ogni volta che visitiamo un nuovo nodo, e salvare il counter; possiamo ripetere questo processo per tutti i nodi, resettando il counter ogni volta e saltando i nodi già visitati da altre \textit{dfs}, e tenendo la componente massima vista finora e il nodo da cui parte.
 
+A questo punto una nuova dfs può caricare in un vettore tutti i nodi e in un altro tutti gli archi che visitiamo facendo la \textit{dfs} partendo dal nodo identificato prima. Possiamo anche ordinare gli archi in ordine crescente di peso.
+
+A questo punto stampiamo a \texttt{sdout}, in quest'ordine:
+\begin{itemize}
+    \item Il numero di nodi $n$
+    \item $n$ righe, ciascuna contenente un nodo della componente connessa
+    \item Il massimo peso $W$
+    \item Il numero di archi $m$
+    \item $m$ righe, ciascuna contenente: il peso $w_i$, il nodo minore dell'arco $ln$, e il nodo maggiore $gn$.
+\end{itemize}
 
 \section{Prima soluzione}
-
+La prima soluzione 
 \section{Seconda soluzione efficiente}
 \subsection{Idea dell'algoritmo}
 \subsection{Descrizione e correttezza}
