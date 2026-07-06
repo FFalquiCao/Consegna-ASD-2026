@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//const int LINES = 760447;
 const int LINES = 594924;
-//const int LINES = 3;
 
 int main() {
 
@@ -35,35 +35,18 @@ int main() {
 
     int n = MaxV+1;
 
-    vector<vector<pair<int,int>>> adj(n, vector<pair<int,int>>(0));
+    //vector<vector<pair<int,int>>> adj(n, vector<pair<int,int>>(0));
+    vector<unordered_map<int,int>> adj(n);
     int maxWeight = 0;
 
     for(int p = 0; p < LINES; p++) {
         int prev = paths[p][0];
         for(int i = 1; i<paths[p].size(); i++) {
             int curr = paths[p][i];
-            
-            bool found = false;
-            for(int j = 0; j<adj[curr].size(); j++) {
-                if(adj[curr][j].first == prev) {
-                    (adj[curr][j].second)++;
-                    found = true; 
-                    break;
-                }
-            }
-            if(found) {
-                for(int j = 0; j<adj[prev].size(); j++) {
-                    if(adj[prev][j].first == curr) {
-                        (adj[prev][j].second)++; 
-                        maxWeight = max(maxWeight, adj[prev][j].second);
-                        break;
-                    }
-                }
-            } else {
-                adj[prev].push_back(make_pair(curr, 1));
-                adj[curr].push_back(make_pair(prev, 1));
-                maxWeight = max(maxWeight, 1);
-            }
+
+            adj[curr][prev]++;
+            adj[prev][curr]++;
+            maxWeight = max(maxWeight, adj[prev][curr]++);
 
             prev = curr;
         }
