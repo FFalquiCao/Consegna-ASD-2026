@@ -5,7 +5,6 @@ using namespace std;
 const int LINES = 594924;
 
 int main() {
-
     vector<vector<int>> paths(LINES, vector<int>(0));
 
     int MaxV = 0;
@@ -14,13 +13,25 @@ int main() {
         
         //una stringa di input è della forma routeviews/routeviews|5 3561|3847|6618 198.137.143.0/24 i 204.70.4.89
         //l'unica parte che ci interessa è 3561|3847|6618
-
+        
         for(int i = 0; i<5; i++) {
             string s;
             cin >> s;
             
             if(i == 1) {
-                while(!s.empty()) {
+                int v = 0;
+                for(int j = 0; j<s.size(); j++) {
+                    if(s.at(j) == '|') {
+                        paths[p].push_back(v);
+                        v = 0;
+                        continue;
+                    }
+                    v = v*10;
+                    v += ((int)s.at(j)) - (int)'0'; 
+                    MaxV = max(MaxV, v);
+                }
+                paths[p].push_back(v);
+                /*while(!s.empty()) {
                     long unsigned int pos;
                     int v = stoi(s, &pos);
                     
@@ -28,7 +39,7 @@ int main() {
 
                     paths[p].push_back((int) v);
                     MaxV = max(MaxV, v);
-                }
+                }*/         // asintoticamente più lento
             }
         }
     }
@@ -46,7 +57,7 @@ int main() {
 
             adj[curr][prev]++;
             adj[prev][curr]++;
-            maxWeight = max(maxWeight, adj[prev][curr]++);
+            maxWeight = max(maxWeight, adj[prev][curr]);
 
             prev = curr;
         }
